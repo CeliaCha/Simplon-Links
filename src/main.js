@@ -6,6 +6,7 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+
  
 var VueFire = require('vuefire')
 var firebase = require('firebase')
