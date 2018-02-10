@@ -6,14 +6,17 @@
       </md-card-header>
 
       <md-card-content>
-        <p>{{linkTitle}}</p>
-        <p>{{linkDescription}}</p>
-       <a :href="url"><img :src="preview" alt="ljlkj"></a>
+        <p>{{link.title}}</p>
+        <p>{{link.description}}</p>
+       <a :href="link.url"><img :src="link.image" alt="ljlkj"></a>
       </md-card-content>
 
       <md-card-actions>
-        <md-button>Mettre à jour</md-button>
-        <md-button >Ajouter</md-button>
+        <md-button>Lien aléatoire</md-button>
+        <md-button v-on:click="addLink">Ajouter lien</md-button>
+        <input
+        v-model="newLink"
+        placeholder="Nouveau Lien">
       </md-card-actions>
     </md-card>
   </div>
@@ -37,37 +40,46 @@ export default {
   name: "SoloLink",
   firebase() {
     return {
-      link: db.ref("liens")
+      linkRef: db.ref("liens")
     };
   },
   data() {
     return {
       dataAvailable: false,
-      preview: "",
-      linkTitle: "",
-      linkDescription: "",
-      url: ""
+      link: {},
+      newLink: ""
     };
   },
 
   mounted() {
-    simplonLink.once("value").then(response => {
-      this.link = response.val()
-      this.dataAvailable = true
+    simplonLink.once("value").then(snapshot => {
       this.axios
         .get(
-          `http://api.linkpreview.net/?key=5a7cbcdda34363028ff1d83e0f7b136f8245aedfc3191&q=${this.link}`
+          `http://api.linkpreview.net/?key=5a7cbcdda34363028ff1d83e0f7b136f8245aedfc3191&q=${snapshot.val()}`
         )
         .then(response => {
-          this.preview = response.data.image
-          this.linkTitle = response.data.title
-          this.linkDescription = response.data.description
-          this.url = response.data.url
+          this.link = response.data;
         });
     });
   },
-  methods: {}
+  methods: {
+    addLink() {
+      log("ici");
+      simplonLink.set(this.newLink);
+      this.axios
+        .get(
+          `http://api.linkpreview.net/?key=5a7cbcdda34363028ff1d83e0f7b136f8245aedfc3191&q=${this.newLink}`
+        )
+        .then(response => {
+          this.link = response.data;
+        });
+    }
+  }
 };
+
+function log(stuff) {
+  console.log(stuff);
+}
 </script>
 
 
