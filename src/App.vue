@@ -7,22 +7,23 @@
 <script>
 import SoloLink from './components/SoloLink'
 
+
 export default {
   name: 'App',
   components: {
-    SoloLink
+    SoloLink,
   }
 }
 </script>
 
 <style>
 #app {
-  max-width: 500px;
+  max-width: 800px;
+  margin: auto;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
