@@ -7,7 +7,6 @@
 <script>
 import SoloLink from './components/SoloLink'
 
-
 export default {
   name: 'App',
   components: {
